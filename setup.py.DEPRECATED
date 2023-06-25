@@ -1,0 +1,13 @@
+from setuptools import setup, find_packages
+
+setup(
+   name='aws-serverless-examples',
+   version='1.0',
+   description='Examples of aws serverless tools',
+   author='yang',
+   author_email='',
+   #packages=['src'],  # same as name
+   packages=find_packages(),
+   install_requires=['boto3'], # external packages as dependencies
+   python_requires=">=3.10"
+)
