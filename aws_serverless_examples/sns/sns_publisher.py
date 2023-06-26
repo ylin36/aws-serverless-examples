@@ -4,12 +4,15 @@ class SNSPublisher:
     def __init__(self, sns_client):
         self.__sns_client = sns_client
     
-    def create_topic(self, topic_name: str) -> dict:
+    def create_topic(self, topic_name: str, fifo_type: bool == False) -> dict:
         """
-            Create topic if it doesn't exist.
+            Create topic if it doesn't exist. 
+            This defaults to creating a standard topic which will allow Subscription protocols: SQS, Lambda, HTTP, SMS, email, mobile application endpoints.
+            As opposed to FIFO, which only allows SQS subscription protocol.
 
             Parameters:
                     topic_name (str): Name of the topic
+                    fifo_type (bool): True to set this as FIFO, which will only allow SQS subscripters. False for Standard topic
 
             Returns:
                     response: {
@@ -19,7 +22,8 @@ class SNSPublisher:
         return self.__sns_client.create_topic(
             Name = topic_name,
             Attributes = {
-                'DisplayName': 'aws_serverless_example'
+                'DisplayName': 'aws_serverless_example',
+                'FifoTopic': fifo_type
             },
             Tags = [
                 {
